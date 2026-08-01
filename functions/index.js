@@ -220,6 +220,8 @@ export async function onRequest(context) {
     hrefreklam6:  ayar.ayar_footerlink || "",
     reklampmobil:      ayar.ayar_reklammobil || "",
     reklampmobilac:      ayar.ayar_mobilpageskin || "",
+    listereklam:      ayar.ayar_reklamliste || "",
+    listereklamlink:  ayar.ayar_listelink || "",
      textreklam:      ayar.ayar_textreklam || "",
     textreklamlink:      ayar.ayar_textreklamlink || "",
 
@@ -251,6 +253,7 @@ function getTema2Html(params) {
     headerapi, bodyapi, footerapi, analyticsapi, apilinkcikisi, pageskincolor,
     footermetin, reklam1, reklam2, reklam3, reklam4, reklam5, reklam6,
     hrefreklam1, hrefreklam2, hrefreklam4, hrefreklam5, hrefreklam6, reklampmobil, reklampmobilac, textreklam, textreklamlink,
+    listereklam, listereklamlink,
     hrefpageskin, menuler, matchesUrl, channelsUrl, kanallar, macKapa
   } = params;
 
@@ -741,11 +744,14 @@ fetch('${matchesUrl}')
     }
 
     // ================= LISTE ARASI REKLAMLAR =================
-    // sira = kacinci GORUNUR mactan sonra cikacagi
-    const listeReklamlari = [
-      { sira: 1, link: '/', gorsel: 'https://www.justintv104.top/assets/img/21422ust1.gif' },
-      { sira: 2, link: '/', gorsel: 'https://www.justintv104.top/assets/img/21422ust1.gif' }
-    ];
+    // Gorsel ve link panelden (Reklam Ayarlari > Mac Listesi Arasi Reklam)
+    const listeGorsel = ${JSON.stringify(listereklam || "")};
+    const listeLink   = ${JSON.stringify(listereklamlink || "")};
+
+    // Ayni gorsel 1. ve 2. mactan sonra gosterilir
+    const listeReklamlari = listeGorsel
+      ? [{ sira: 1 }, { sira: 2 }].map(r => ({ sira: r.sira, gorsel: listeGorsel, link: listeLink }))
+      : [];
 
     window.reklamlariYerlestir = function () {
       const kap = document.getElementById('matches-content');
@@ -753,6 +759,8 @@ fetch('${matchesUrl}')
 
       // Onceki reklamlari temizle
       kap.querySelectorAll('.channel-ad-item').forEach(el => el.remove());
+
+      if (!listeReklamlari.length) return;
 
       // Sadece gorunur maclari say
       const gorunur = Array.prototype.filter.call(
@@ -762,23 +770,27 @@ fetch('${matchesUrl}')
 
       listeReklamlari.forEach(r => {
         const hedef = gorunur[r.sira - 1];
-        if (!hedef || !r.gorsel) return;
+        if (!hedef) return;
 
         const div = document.createElement('div');
         div.className = 'channel-ad-item';
-
-        const a = document.createElement('a');
-        a.href = r.link;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
 
         const img = document.createElement('img');
         img.src = r.gorsel;
         img.alt = 'Reklam';
         img.loading = 'lazy';
 
-        a.appendChild(img);
-        div.appendChild(a);
+        if (r.link) {
+          const a = document.createElement('a');
+          a.href = r.link;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.appendChild(img);
+          div.appendChild(a);
+        } else {
+          div.appendChild(img);
+        }
+
         hedef.after(div);
       });
     };

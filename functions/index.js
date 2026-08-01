@@ -218,6 +218,8 @@ export async function onRequest(context) {
     hrefreklam5:  ayar.ayar_alt2 || "",
     reklam6:      ayar.ayar_reklam4 || "",
     hrefreklam6:  ayar.ayar_footerlink || "",
+    reklampmobil:      ayar.ayar_reklammobil || "",
+    reklampmobilac:      ayar.ayar_mobilpageskin || "",
 
     matchesUrl:   "https://teletv5.top/load/matches.php",
     channelsUrl:  "https://teletv5.top/load/channels.php",
@@ -246,7 +248,7 @@ function getTema2Html(params) {
     favicon, amp, ampAktif, canlisonuc, twitter, telegram, facebook, instagram, youtube,
     headerapi, bodyapi, footerapi, analyticsapi, apilinkcikisi, pageskincolor,
     footermetin, reklam1, reklam2, reklam3, reklam4, reklam5, reklam6,
-    hrefreklam1, hrefreklam2, hrefreklam4, hrefreklam5, hrefreklam6,
+    hrefreklam1, hrefreklam2, hrefreklam4, hrefreklam5, hrefreklam6, reklampmobil, reklampmobilac, 
     hrefpageskin, menuler, matchesUrl, channelsUrl, kanallar, macKapa
   } = params;
 
@@ -476,11 +478,17 @@ ${hrefpageskin
 ${ampAktif && amp ? `<link rel="amphtml" href="${amp}">` : ''}
 </head>
 <body>
-<div class="mobile-top-banner">
-        <a href="/" target="_blank" rel="noopener noreferrer">
-            <img src="" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
-        </a>
+${reklampmobil ? `
+    <div class="mobile-top-banner">
+        ${reklampmobilac ? `
+            <a href="${reklampmobilac}" target="_blank" rel="noopener noreferrer">
+                <img src="${reklampmobil}" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
+            </a>
+        ` : `
+            <img src="${reklampmobil}" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
+        `}
     </div>
+` : ''}
 ${bodyapi}
 <div class="header-top">
 <div class="header-text">

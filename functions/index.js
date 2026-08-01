@@ -478,7 +478,7 @@ ${ampAktif && amp ? `<link rel="amphtml" href="${amp}">` : ''}
 <body>
 <div class="mobile-top-banner">
         <a href="/" target="_blank" rel="noopener noreferrer">
-            <img src="https://justin.corepanel.pro/dimg/2169325354215362433728706pageskn.jpg" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
+            <img src="https://www.justintv104.top/assets/img/25354215362433728706pageskn.jpg" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
         </a>
     </div>
 ${bodyapi}

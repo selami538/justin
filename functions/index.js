@@ -478,7 +478,7 @@ ${ampAktif && amp ? `<link rel="amphtml" href="${amp}">` : ''}
 <body>
 <div class="mobile-top-banner">
         <a href="/" target="_blank" rel="noopener noreferrer">
-            <img src="https://www.justintv104.top/assets/img/25354215362433728706pageskn.jpg" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6alUe-bYEfL5KFra1_G9AvlIxBFKlnwXF7NuGxVnccFb5nCT1B1aHmM3wGY9tQ5EciaoFGgmEfl2S5OoOmK5gAo8ZEb-47BVTK9s3skblJ3sNU9jIeHDaAtYOTn7rbjUr-9uypGX79BY4XmbR-bVIZMOL1vF_zHhs6M_BZloUFoTA7E_NRU8RxcZNO5E/s1600/Golbet%20Mobil%20Banner.png" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
         </a>
     </div>
 ${bodyapi}

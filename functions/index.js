@@ -491,6 +491,9 @@ function getTema2Html(params) {
     position: relative;
     overflow: visible;
 }
+body {
+    background: ${pageskincolor};
+}
 </style>
 ${headerapi}
 ${analyticsapi}

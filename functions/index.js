@@ -220,6 +220,8 @@ export async function onRequest(context) {
     hrefreklam6:  ayar.ayar_footerlink || "",
     reklampmobil:      ayar.ayar_reklammobil || "",
     reklampmobilac:      ayar.ayar_mobilpageskin || "",
+     textreklam:      ayar.ayar_textreklam || "",
+    textreklamlink:      ayar.ayar_textreklamlink || "",
 
     matchesUrl:   "https://teletv5.top/load/matches.php",
     channelsUrl:  "https://teletv5.top/load/channels.php",
@@ -248,7 +250,7 @@ function getTema2Html(params) {
     favicon, amp, ampAktif, canlisonuc, twitter, telegram, facebook, instagram, youtube,
     headerapi, bodyapi, footerapi, analyticsapi, apilinkcikisi, pageskincolor,
     footermetin, reklam1, reklam2, reklam3, reklam4, reklam5, reklam6,
-    hrefreklam1, hrefreklam2, hrefreklam4, hrefreklam5, hrefreklam6, reklampmobil, reklampmobilac, 
+    hrefreklam1, hrefreklam2, hrefreklam4, hrefreklam5, hrefreklam6, reklampmobil, reklampmobilac, textreklam, textreklamlink,
     hrefpageskin, menuler, matchesUrl, channelsUrl, kanallar, macKapa
   } = params;
 
@@ -518,6 +520,13 @@ ${menuler.map(menu => `<li class="blink"><a href="${menu.url}" target="_self"><i
 
 ${reklam1 ? `<div style="margin:10px;text-align:center;">${hrefreklam1 ? `<a href="${hrefreklam1}" target="_blank"><img class="ads-img" src="${reklam1}" width="100%"/></a>` : `<img class="ads-img" src="${reklam1}" width="100%"/>`}</div>` : ''}
 ${reklam4 ? `<div style="margin:10px;text-align:center;">${hrefreklam4 ? `<a href="${hrefreklam4}" target="_blank"><img class="ads-img" src="${reklam4}" width="100%"/></a>` : `<img class="ads-img" src="${reklam4}" width="100%"/>`}</div>` : ''}
+${textreklam ? `
+    <div class="hellobar">
+        ${textreklamlink
+            ? `<a href="${textreklamlink}" target="_blank" rel="noopener noreferrer">${textreklam}</a>`
+            : `<span>${textreklam}</span>`}
+    </div>
+` : ''}
 <div class="container-grid player-grid">
 <center>
 <div class="live-player" data-loadbalancer="1" data-loadbalancerdomain="osflare.work">

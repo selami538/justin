@@ -471,6 +471,12 @@ function getTema2Html(params) {
                 display: block;
             }
         }
+
+/* --- MAC LISTESI ARASI REKLAM --- */
+.channel-ad-item { display: block; padding: 6px 0; }
+.channel-ad-item a { display: block; }
+.channel-ad-item img { display: block; width: 100%; height: auto; border-radius: 4px; }
+
         .hellobar {
     background: var(--bg-glass);
     backdrop-filter: var(--glass-blur);
@@ -651,6 +657,9 @@ document.addEventListener('DOMContentLoaded', function () {
           ? 'flex'
           : 'none';
       });
+
+      // Arama sonrasi reklamlari gorunur maclara gore yeniden diz
+      if (window.reklamlariYerlestir) window.reklamlariYerlestir();
     });
   }
 
@@ -731,12 +740,56 @@ fetch('${matchesUrl}')
       });
     }
 
+    // ================= LISTE ARASI REKLAMLAR =================
+    // sira = kacinci GORUNUR mactan sonra cikacagi
+    const listeReklamlari = [
+      { sira: 1, link: '/', gorsel: 'https://www.justintv104.top/assets/img/21422ust1.gif' },
+      { sira: 2, link: '/', gorsel: 'https://www.justintv104.top/assets/img/21422ust1.gif' }
+    ];
+
+    window.reklamlariYerlestir = function () {
+      const kap = document.getElementById('matches-content');
+      if (!kap) return;
+
+      // Onceki reklamlari temizle
+      kap.querySelectorAll('.channel-ad-item').forEach(el => el.remove());
+
+      // Sadece gorunur maclari say
+      const gorunur = Array.prototype.filter.call(
+        kap.querySelectorAll('.single-match'),
+        el => el.style.display !== 'none'
+      );
+
+      listeReklamlari.forEach(r => {
+        const hedef = gorunur[r.sira - 1];
+        if (!hedef || !r.gorsel) return;
+
+        const div = document.createElement('div');
+        div.className = 'channel-ad-item';
+
+        const a = document.createElement('a');
+        a.href = r.link;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+
+        const img = document.createElement('img');
+        img.src = r.gorsel;
+        img.alt = 'Reklam';
+        img.loading = 'lazy';
+
+        a.appendChild(img);
+        div.appendChild(a);
+        hedef.after(div);
+      });
+    };
+
     function filterMatches(categoryStr) {
       const filters = categoryStr.split(',').map(f => f.trim().toLowerCase());
       document.querySelectorAll("#matches-content .single-match").forEach(match => {
         const type = (match.getAttribute("data-matchtype") || "").toLowerCase();
         match.style.display = filters.includes(type) ? "flex" : "none";
       });
+      window.reklamlariYerlestir();
     }
     document.querySelectorAll('.menu-item').forEach(item => {
       item.addEventListener('click', function () {

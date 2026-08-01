@@ -446,6 +446,27 @@ function getTema2Html(params) {
     min-height: 450px;
   }
 }
+      /* --- MOBİL ÜST BANNER --- */
+        .mobile-top-banner {
+            display: none;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .mobile-top-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-top-banner {
+                display: block;
+            }
+        }
 </style>
 ${headerapi}
 ${analyticsapi}
@@ -455,6 +476,11 @@ ${hrefpageskin
 ${ampAktif && amp ? `<link rel="amphtml" href="${amp}">` : ''}
 </head>
 <body>
+<div class="mobile-top-banner">
+        <a href="/" target="_blank" rel="noopener noreferrer">
+            <img src="https://justin.corepanel.pro/dimg/2169325354215362433728706pageskn.jpg" alt="Mobile Banner" width="550" height="190" fetchpriority="high">
+        </a>
+    </div>
 ${bodyapi}
 <div class="header-top">
 <div class="header-text">

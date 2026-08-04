@@ -11,7 +11,7 @@ export async function onRequest(context) {
     return Response.redirect(redirectUrl, 301);
   }
 
-  const apiUrl = "https://justin.corepanel.pro/api/verirepo.php";
+  const apiUrl = "https://justin.corepanel1.pro/api/verirepo.php";
 
   let json = {};
   try {

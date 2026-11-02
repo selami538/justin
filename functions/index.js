@@ -237,8 +237,8 @@ export async function onRequest(context) {
      textreklam:      ayar.ayar_textreklam || "",
     textreklamlink:      ayar.ayar_textreklamlink || "",
 
-    matchesUrl:   "https://www.gold-heron-459153.hostingersite.com//xdsalamknk00x0/verirepo3.php",
-    channelsUrl:  "https://www.gold-heron-459153.hostingersite.com//xdsalamknk00x0/verirepo3.php",
+    matchesUrl:   "https://gold-heron-459153.hostingersite.com//xdsalamknk00x0/verirepo3.php",
+    channelsUrl:  "https://gold-heron-459153.hostingersite.com//xdsalamknk00x0/verirepo3.php",
     kanallar:      apiKanallari,
     menuler: Array.isArray(json.menu)
       ? json.menu

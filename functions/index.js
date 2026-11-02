@@ -11,33 +11,56 @@ export async function onRequest(context) {
     return Response.redirect(redirectUrl, 301);
   }
 
-  const apiUrl = "";
-
-  let json = {};
-  try {
-    const response = await fetch(apiUrl, {
-      cf: { cacheTtl: 60, cacheEverything: true }
-    });
-    json = await response.json();
-  } catch (e) {
-    console.error("API hatası:", e);
-  }
-
-  const aktifTema = parseInt(json?.tema?.tema_sec ?? 0);
-
-  // ===== TEMA 0 veya 1 -> PHP hosting'e proxy =====
-  if (aktifTema === 0 || aktifTema === 1) {
-    const phpUrl = "" + url.pathname + url.search;
-
-    const phpRequest = new Request(phpUrl, {
-      method: request.method,
-      headers: request.headers,
-      body: ["GET", "HEAD"].includes(request.method) ? null : request.body,
-      redirect: "manual"
-    });
-
-    return fetch(phpRequest);
-  }
+  // ===== BEGET BAĞIMSIZ TEMA 2 =====
+  // Harici API/PHP origin kaldırıldı; Tema 2 doğrudan Pages üzerinde açılır.
+  const json = {
+    tema: { tema_sec: 2 },
+    ayar: {
+      ayar_macackapa: 0,
+      ayar_title: "Canlı Maç İzle",
+      ayar_description: "Canlı spor karşılaşmalarını takip edebilirsiniz.",
+      ayar_logo: "/img/logo.png",
+      logo_genislik: "180",
+      logo_height: "60",
+      ayar_favicon: "/favicon.ico",
+      amp_guncel: "",
+      ayar_amp: 1,
+      ayar_skor: 1,
+      ayar_twitter: "",
+      ayar_telegram: "",
+      ayar_facebook: "",
+      ayar_instagram: "",
+      ayar_youtube: "",
+      ayar_api: "",
+      ayar_body: "",
+      ayar_footervole: "",
+      ayar_analystic: "",
+      ayar_linkcikis: "",
+      ayar_pcolor: "#111827",
+      ayar_footermetin: "",
+      ayar_reklam1: "",
+      ayar_ust: "",
+      ayar_reklam2: "",
+      ayar_alt: "",
+      ayar_reklam3: "",
+      ayar_pageskin: "",
+      ayar_reklamust2: "",
+      ayar_ust2: "",
+      ayar_reklamalt2: "",
+      ayar_alt2: "",
+      ayar_reklam4: "",
+      ayar_footerlink: "",
+      ayar_reklammobil: "",
+      ayar_mobilpageskin: "",
+      ayar_reklamliste: "",
+      ayar_listelink: "",
+      ayar_textreklam: "",
+      ayar_textreklamlink: ""
+    },
+    playerlogo: {},
+    player: [],
+    menu: []
+  };
 
   // ===== TEMA 2 (ve diğerleri) -> Pages'in kendi HTML'i =====
   // Hesabı Pages proje adresinden değil, ziyaret edilen gerçek alan adından yap.
@@ -63,18 +86,7 @@ export async function onRequest(context) {
   });
 
   const ayar = json?.ayar || {};
-  const playerlogo = json?.playerlogo || {};
-
-  // ===== API'DEKİ TV / SPOR KANALLARI =====
-  const apiOrigin = new URL(apiUrl).origin;
-
-  const tamUrlYap = (deger) => {
-    const value = String(deger || "").trim();
-    if (!value) return "";
-    if (/^https?:\/\//i.test(value)) return value;
-    return apiOrigin + "/" + value.replace(/^\/+/, "");
-  };
-
+  // ===== YEREL TV / SPOR KANALLARI =====
   // Kanal logoları Pages projesinin kökündeki /img klasöründe duruyor.
   // API'deki kanal_webp / kanal_png alanları boş olsa bile player_seo üzerinden
   // doğru dosya adı otomatik seçilir.
